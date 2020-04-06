@@ -134,7 +134,11 @@ choose one of the sample events e.g. get-call calls the function with the sample
         "StatusCode": 200,
         "ExecutedVersion": "$LATEST"
     }
-    "200 OK"
+    {"status" "200",
+     "result" {"3b2cb090-12b5-4bb8-aeaf-807b381c821" ["0423123123"],
+               "3b2cb090-12b5-4bb8-aeaf-807b381c823" ["0423123126" "0423123127"],
+               "3b2cb090-12b5-4bb8-aeaf-807b381c822" ["0423123124" "0423123125"]},
+     "query" {"operation" "get-all"}}
 
 The application uses AWS X-Ray to trace requests. Open the [X-Ray console](https://console.aws.amazon.com/xray/home#/service-map) to view the service map.
 

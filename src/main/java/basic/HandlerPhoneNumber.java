@@ -6,10 +6,9 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import javax.print.DocFlavor;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 public class HandlerPhoneNumber implements RequestHandler<Map<String, String>, String> {
@@ -30,7 +29,7 @@ public class HandlerPhoneNumber implements RequestHandler<Map<String, String>, S
             logger.log("EVENT: " + gson.toJson(event));
             logger.log("EVENT TYPE: " + event.getClass().toString());
 
-            Map database;
+            HashMap<String,String[]> database;
             try {
 
                 ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
