@@ -33,6 +33,8 @@ Sample response:
                "3b2cb090-12b5-4bb8-aeaf-807b381c823" ["0423123126" "0423123127"]},
      "query" {"operation" "get-all"},
      "status" 200}    
+
+## Get all customer phone numbers
     
 To get a list of numbers for a customer the service is called with the customer ID. Any customer ID not in the database will trigger a 400 response.
 
