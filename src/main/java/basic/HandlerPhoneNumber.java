@@ -6,8 +6,10 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import javax.print.DocFlavor;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Map;
 
 public class HandlerPhoneNumber implements RequestHandler<Map<String, String>, String> {
@@ -34,19 +36,19 @@ public class HandlerPhoneNumber implements RequestHandler<Map<String, String>, S
                 ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
                 InputStream is = classLoader.getResourceAsStream("number-database.json");
 
-                database = (Map) new Gson().fromJson(new InputStreamReader(is), java.util.HashMap.class).get("customers");
+                database = new Gson().fromJson(new InputStreamReader(is), java.util.HashMap.class);
                 logger.log("Customer database: " + database);
 
             } catch (Exception e) {
                 logger.log("Error init DB" + e.getMessage());
-                Map result = Map.of("status", 500,"error", e.getMessage());
+                Map<String, String> result = Map.of("status", "500", "error", e.getMessage());
                 return gson.toJson(result);
             }
 
             String operation = event.get("operation");
             switch (operation) {
                 case "get-all": {
-                    Map result = Map.of("status", 200,"query", event,"result", database);
+                    Map<String, Object> result = Map.of("status", "200", "query", event, "result", database);
                     return gson.toJson(result);
                 }
                 case "get": {
@@ -55,11 +57,11 @@ public class HandlerPhoneNumber implements RequestHandler<Map<String, String>, S
                     Object numbers = database.get(customer);
 
                     if (numbers == null) {
-                        Map result = Map.of("status", 400, "query", event,"error", "unknown customer number");
+                        Map<String, Object> result = Map.of("status", "400", "query", event, "error", "unknown customer number");
                         return gson.toJson(result);
                     }
 
-                    Map result = Map.of("status", 200, "query", event, "result", database.get(customer));
+                    Map<String, Object> result = Map.of("status", "200", "query", event, "result", database.get(customer));
                     return gson.toJson(result);
 
                 }
@@ -69,19 +71,20 @@ public class HandlerPhoneNumber implements RequestHandler<Map<String, String>, S
 
                     logger.log("Activate number " + number + " for customer" + customer);
 
-                    Map result = Map.of("status", 200,"query", event);
+                    Map<String, Object> result = Map.of("status", "200", "query", event);
                     return gson.toJson(result);
 
                 }
                 default: {
-                    Map result = Map.of("status", 400,"query", event,"error", "unknown operation");
+                    Map<String, Object> result = Map.of("status", "400", "query", event, "error", "unknown operation");
                     return gson.toJson(result);
                 }
             }
 
         } catch (RuntimeException e) {
+            logger.log(e.toString());
             logger.log("ERROR while executing " + e.getMessage());
-            Map result = Map.of("status", 500, "query", event, "error", e.getMessage());
+            Map<String, Object> result = Map.of("status", "500", "query", event, "error", e.getMessage());
             return gson.toJson(result);
         }
 

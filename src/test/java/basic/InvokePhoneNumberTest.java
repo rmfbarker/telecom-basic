@@ -22,7 +22,6 @@ class InvokePhoneNumberTest {
         event.put("operation", "get-all");
 
         Context context = new TestContext();
-        String requestId = context.getAwsRequestId();
         HandlerPhoneNumber handler = new HandlerPhoneNumber();
         String result = handler.handleRequest(event, context);
         logger.info("Result was " + result);
@@ -38,7 +37,6 @@ class InvokePhoneNumberTest {
         event.put("customer", "3b2cb090-12b5-4bb8-aeaf-807b381c821");
 
         Context context = new TestContext();
-        String requestId = context.getAwsRequestId();
         HandlerPhoneNumber handler = new HandlerPhoneNumber();
         String result = handler.handleRequest(event, context);
         logger.info("Result was " + result);
@@ -55,7 +53,6 @@ class InvokePhoneNumberTest {
         event.put("customer", "foo");
 
         Context context = new TestContext();
-        String requestId = context.getAwsRequestId();
         HandlerPhoneNumber handler = new HandlerPhoneNumber();
         String result = handler.handleRequest(event, context);
         logger.info("Result was " + result);
@@ -72,7 +69,6 @@ class InvokePhoneNumberTest {
         event.put("number", "0423031331");
 
         Context context = new TestContext();
-        String requestId = context.getAwsRequestId();
         HandlerPhoneNumber handler = new HandlerPhoneNumber();
         String result = handler.handleRequest(event, context);
         logger.info("Result was " + result);
